@@ -1,8 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile
+from services.food_service import detect_food
 
 app = FastAPI()
 
+@app.post("/analyze")
+async def prediction(file: UploadFile):
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+    image_bytes = await file.read()
+
+    foods = detect_food(image_bytes)
+
+    return foods
