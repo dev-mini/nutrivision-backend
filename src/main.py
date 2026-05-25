@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile
 from services.food_service import detect_food
+from services.nutrition_service import analyze
 
 app = FastAPI()
 
@@ -10,4 +11,6 @@ async def prediction(file: UploadFile):
 
     foods = detect_food(image_bytes)
 
-    return foods
+    nutrition=analyze(foods)
+
+    return nutrition
